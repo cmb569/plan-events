@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import "../App.css";
 
-export default function CelebrationHolidayPkg(): JSX.Element {
+export default function CelebrationHolidayPkg() {
   return (
     <Container>
       <div className="PresetPkgs">
@@ -61,7 +61,7 @@ export default function CelebrationHolidayPkg(): JSX.Element {
               <Button
                 className="BackButton"
                 variant="secondary"
-                as="a"
+                action
                 href="/eventPackages"
               >
                 Back
@@ -69,7 +69,7 @@ export default function CelebrationHolidayPkg(): JSX.Element {
               <Button
                 className="NextButton"
                 variant="secondary"
-                as="a"
+                action
                 href="/reunion"
               >
                 Next
@@ -80,7 +80,7 @@ export default function CelebrationHolidayPkg(): JSX.Element {
               <Button
                 className="SelectButton"
                 variant="success"
-                as="a"
+                action
                 href="/packageForm"
               >
                 Select

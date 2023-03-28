@@ -7,7 +7,7 @@ interface IFlorals extends Document {
   flower: string;
   inSeason: boolean;
   image: string;
-  floralStyle: ObjectId;
+  floralStyle: typeof ObjectId;
 }
 
 // schema

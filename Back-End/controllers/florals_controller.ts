@@ -2,7 +2,7 @@
 import express, { Request, Response } from 'express';
 const florals = express.Router();
 import Florals from '../models/florals';
-import FloralStyle from '../models/floralStyle';
+import { IFloralStyle } from '../models/floralStyle';
 
 //INDEX
 florals.get('/', (req: Request, res: Response) => {

@@ -39,11 +39,11 @@ app.get("/", (_req: any, res: { send: (arg0: string) => void; }) => {
 });
 
 //florals
- const floralsController = require('./controllers/florals_controller.js');
+ const floralsController = require('./controllers/florals_controller.ts');
  app.use('/florals', floralsController);
 
  // floralStyle
-const floralStyleController = require('./controllers/floralStyle_controller.js')
+const floralStyleController = require('./controllers/floralStyle_controller.ts')
 app.use('/floralStyle', floralStyleController)
 
 // 404 Pagenp

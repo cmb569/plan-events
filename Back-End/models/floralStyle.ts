@@ -1,5 +1,5 @@
 import mongoose, { Document } from 'mongoose';
-import Florals, { IFlorals } from './florals';
+'import IFlorals from "./florals"';
 
 // INTERFACE
 export interface IFloralStyle extends Document {
@@ -22,11 +22,13 @@ const floralStyleSchema = new mongoose.Schema(
 // Hooks
 floralStyleSchema.post<IFloralStyle>('findOneAndDelete', function(this: Query<IFloralStyleDocument, IFloralStyleDocument>, doc) {
   Florals.deleteMany({ floralStyle: doc?._id }).then(
-    (deleteStatus) => {
-      console.log(deleteStatus);
+    (deleteStatus: unknown) => {
+      if (typeof deleteStatus === 'boolean') {
+        // handle boolean case
+      } else {
+        // handle other cases
+      }
     }
-  );
-});
 
 
 // Virtuals:
