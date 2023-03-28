@@ -1,8 +1,16 @@
-const React = require("react");
-const Default = require("./layout/default");
+import React from "react";
+import Default from "./layout/default";
 
-function Show({ florals}) {
- 
+type FloralsProps = {
+  florals: {
+    id: number;
+    flower: string;
+    inSeason: boolean;
+    image: string;
+  };
+};
+
+function Show({ florals }: FloralsProps) {
   return (
     <Default>
       <h3>{florals.flower}</h3>
@@ -26,4 +34,4 @@ function Show({ florals}) {
   );
 }
 
-module.exports = Show;
+export default Show;

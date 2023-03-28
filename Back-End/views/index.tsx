@@ -1,7 +1,13 @@
-const React = require('react')
-const Default = require('./layout/default')
+import React from 'react';
+import Default from './layout/default';
 
-function Index({ florals, floralStyle, title }) {
+interface Props {
+  florals: { id: number; flower: string }[];
+  floralStyle: { id: number; name: string }[];
+  title: string;
+}
+
+function Index({ florals, floralStyle, title }: Props): JSX.Element {
   return (
     <Default title={title}>
       <h2>Vendor DataBase Page</h2>
@@ -16,7 +22,6 @@ function Index({ florals, floralStyle, title }) {
           );
         })}
       </ul>  */}
-
 
       <h3>Florals</h3>
       <div className="newButton">
@@ -38,4 +43,4 @@ function Index({ florals, floralStyle, title }) {
   );
 }
 
-module.exports = Index;
+export default Index;

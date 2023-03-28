@@ -1,43 +1,44 @@
-// dependencies
-const mongoose = require('mongoose')
-const { Schema } = mongoose
-const Florals = require('./florals')
+import mongoose, { Document } from 'mongoose';
+import Florals, { IFlorals } from './florals';
+
+// INTERFACE
+export interface IFloralStyle extends Document {
+  name: string;
+  florals?: IFlorals[];
+}
 
 // SCHEMA
-const floralStyleSchema = new Schema(
-    {
-      name: {
-        type: String,
-        required: true,
-        enum: ["Bouquet", "CenterPiece", "Arch"],
-      },
-    //   startDate: {
-    //     type: Date,
-    //     required: true,
-    //   },
-    //   bio: String,
+const floralStyleSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      enum: ['Bouquet', 'CenterPiece', 'Arch'],
     },
-    { toJSON: { virtuals: true } }
-  )
+  },
+  { toJSON: { virtuals: true } }
+);
 
-  // hooks 
-floralStyleSchema.post('findOneAndDelete', function() {
-  Florals.deleteMany({ floralStyle: this._conditions._id })
-      .then(deleteStatus => {
-          console.log(deleteStatus)
-      })
-})
-
-  
+// Hooks
+floralStyleSchema.post<IFloralStyle>('findOneAndDelete', function(this: Query<IFloralStyleDocument, IFloralStyleDocument>, doc) {
+  Florals.deleteMany({ floralStyle: doc?._id }).then(
+    (deleteStatus) => {
+      console.log(deleteStatus);
+    }
+  );
+});
 
 
 // Virtuals:
 floralStyleSchema.virtual('florals', {
-    ref: 'Florals',
-    localField: '_id',
-    foreignField: 'florals'
-})
+  ref: 'Florals',
+  localField: '_id',
+  foreignField: 'floralStyle',
+});
 
-  // MODEL & EXPORT
-  const FloralStyle= mongoose.model('FloralStyle', floralStyleSchema);
-  module.exports = FloralStyle;
+// MODEL & EXPORT
+const FloralStyle = mongoose.model<IFloralStyle>(
+  'FloralStyle',
+  floralStyleSchema
+);
+export default FloralStyle;

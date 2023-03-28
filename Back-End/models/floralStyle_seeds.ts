@@ -1,15 +1,14 @@
-module.exports =[
+export default [
     {
-        name: 'Bouquet',
-        description: 'a wedding favorite'
+    name: 'Bouquet',
+    description: 'a wedding favorite'
     },
     {
-        name: 'centerpiece',
-        description: 'usefull for dinners and banquets'
+    name: 'centerpiece',
+    description: 'useful for dinners and banquets'
     },
     {
-        name: 'arch',
-        description: 'sweet for weddings and fun for pictures'
+    name: 'arch',
+    description: 'sweet for weddings and fun for pictures'
     }
- 
-]
+    ];

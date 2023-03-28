@@ -1,29 +1,29 @@
-const React = require('react')
-const Default = require('./layouts/Default')
+import React from 'react';
+import Default from './layouts/Default';
+import { FloralStyle } from '../types';
 
-function Show ({floralStyle}) {
+interface Props {
+  floralStyle: FloralStyle;
+}
+
+function Show ({floralStyle}: Props) {
     return (
       <Default>
           <h3>{floralStyle.type}</h3>
-          {/* <p>{floralStyle.type} has been baking with us since {baker.startDate.getFullYear()}</p>
-          <p>About {baker.name}: {baker.bio}</p>
-          <h3>Breads {baker.name} has baked</h3> */}
-                    <ul>
-                        {floralStyle.florals.map((florals)=> {
-                                return (
-                                    <li key={florals.id}>
-                                        {florals.flower_type}
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
-            <form action={`/florals/${florals.id}?_method=DELETE`} method="POST">
+          <ul>
+              {floralStyle.florals.map((florals)=> {
+                  return (
+                      <li key={florals.id}>
+                          {florals.flower_type}
+                      </li>
+                  )
+              })}
+          </ul>
+          <form action={`/florals/${florals.id}?_method=DELETE`} method="POST">
             <input type="submit" value="DELETE"/>
-            </form>
-
+          </form>
       </Default>
     )
 }
 
-module.exports = Show
+export default Show;

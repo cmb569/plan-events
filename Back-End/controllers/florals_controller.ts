@@ -1,101 +1,97 @@
-//DEPENCIES
-const express = require('express');
+//DEPENDENCIES
+import express, { Request, Response } from 'express';
 const florals = express.Router();
-const Florals = require('../models/florals.js');
-const FloralStyle = require ('../models/floralStyle.js');
+import Florals from '../models/florals';
+import FloralStyle from '../models/floralStyle';
 
-
-// INDEX
-florals.get('/', (req, res) => {
-  FloralStyle.find()
-    .then(foundFloralStyleChoice => {
-      Florals.find()
-      .then(foundFlorals => {
-          res.render('index', {
-              florals: foundFlorals,
-              //floralStyle: foundFloralStyle,
-              title: 'Vendor DataBase'
-          })
-      })
-    })
+//INDEX
+florals.get('/', (req: Request, res: Response) => {
+FloralStyle.find()
+.then((foundFloralStyleChoice: any) => {
+Florals.find()
+.then((foundFlorals: any) => {
+res.render('index', {
+florals: foundFlorals,
+//floralStyle: foundFloralStyle,
+title: 'Vendor DataBase'
+})
+})
+})
 })
 
-// NEW
-florals.get('/new', (req, res) => {
-    FloralStyle.find()
-        .then(foundFloralStyle => {
-            res.render('new', {
-                floralStyle: foundFloralStyle
-            })
-      })
+//NEW
+florals.get('/new', (req: Request, res: Response) => {
+FloralStyle.find()
+.then((foundFloralStyle: any) => {
+res.render('new', {
+floralStyle: foundFloralStyle
+})
+})
 })
 
-// SHOW
-florals.get('/:id', (req, res) => {
-  Florals.findById(req.params.id)
-      .populate('floralStyle')
-      .then(foundFloralStyle => {
-        res.render('show', {
-            florals: foundFloralStyle
-        }) 
-      })
-      .catch(err => {
-        res.send('404')
-      })
+//SHOW
+florals.get('/:id', (req: Request, res: Response) => {
+Florals.findById(req.params.id)
+.populate('floralStyle')
+.then((foundFloralStyle: any) => {
+res.render('show', {
+florals: foundFloralStyle
+})
+})
+.catch((err: Error) => {
+res.send('404')
+})
 })
 
-//create
-florals.post('/', (req, res) => {
-  if (!req.body.image) {
-    req.body.image = undefined;
-  }
-  if (req.body.inSeason === 'on') {
-    req.body.inSeason = true;
-  } else {
-    req.body.inSeason = false;
-  }
-  Florals.create(req.body);
-  res.redirect('/florals');
+//CREATE
+florals.post('/', (req: Request, res: Response) => {
+if (!req.body.image) {
+req.body.image = undefined;
+}
+if (req.body.inSeason === 'on') {
+req.body.inSeason = true;
+} else {
+req.body.inSeason = false;
+}
+Florals.create(req.body);
+res.redirect('/florals');
 });
 
-// EDIT
-florals.get('/:id/edit', (req, res) => {
-  FloralStyle.find()
-    .then(foundFloralStyle => {
-        Florals.findById(req.params.id)
-          .then(foundFlorals => {
-            res.render('edit', {
-                florals: foundFlorals, 
-                floralStyle: foundFloralStyleChoice
-            })
-          })
-    })
+//EDIT
+florals.get('/:id/edit', (req: Request, res: Response) => {
+FloralStyle.find()
+.then((foundFloralStyle: any) => {
+Florals.findById(req.params.id)
+.then((foundFlorals: any) => {
+res.render('edit', {
+florals: foundFlorals,
+floralStyle: foundFloralStyle
+})
+})
+})
 })
 
+//UPDATE
+florals.put('/:id', (req: Request, res: Response) => {
+if(req.body.inSeason === 'on'){
+req.body.inSeason = true
+} else {
+req.body.inSeason = false
+}
+Florals.findByIdAndUpdate(req.params.id, req.body, { new: true })
+.then((updatedFlorals: any) => {
+console.log(updatedFlorals)
+res.redirect(`/florals/${req.params.id}`);
 
-
-// UPDATE
-
-florals.put('/:id', (req, res) => {
-  if(req.body.inSeason === 'on'){
-    req.body.inSeason = true
-  } else {
-    req.body.inSeason = false
-  }
-  Florals.findByIdAndUpdate(req.params.id, req.body, { new: true }) 
-    .then(updatedFlorals => {
-      console.log(updatedFlorals) 
-      res.redirect(`/florals/${req.params.id}`) 
-    })
+})
 })
 
-
-// DELETE
-florals.delete('/:id', (req, res) => {
-  Florals.findByIdAndDelete(req.params.id) 
-    .then(deletedFlorals => { 
-      res.status(303).redirect('/florals')
-    })
+//DELETE
+florals.delete('/:id', (req: Request, res: Response) => {
+Florals.findByIdAndDelete(req.params.id)
+.then((deletedFlorals: any) => {
+res.status(303).redirect('/florals')
+})
 })
 
-module.exports = florals;
+export = florals;

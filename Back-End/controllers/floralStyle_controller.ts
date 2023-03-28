@@ -1,45 +1,44 @@
-// dependencies
-const express = require('express')
-const floralStyle = express.Router()
-const FloralStyle = require('../models/floralStyle.js')
-const floralStyleSeedData = require('../models/floralStyle_seeds.js')
+import express, { Request, Response, Router } from 'express';
+import FloralStyle from '../models/floralStyle';
+import floralStyleSeedData from '../models/floralStyle_seeds';
 
-floralStyle.get('/data/seed', (req, res) => {
-    FloralStyle.insertMany(floralStyleSeedData)
-        .then(res.redirect('/florals'))
-})
+const floralStyle: Router = express.Router();
 
-// Index: 
-floralStyle.get('/', (req, res) => {
-    FloralStyle.find()
-        .populate('floralStyle')
-        .then(foundFlorals => {
-            res.send(foundFlorals)
-        })
-})  
+floralStyle.get('/data/seed', (req: Request, res: Response) => {
+  FloralStyle.insertMany(floralStyleSeedData)
+    .then(() => res.redirect('/florals'))
+    .catch((err: Error) => res.status(500).send(err.message));
+});
 
-// Show: 
-floralStyle.get('/:id', (req, res) => {
-    FloralStyle.findById(req.params.id)
-        .populate('florals')
-        .then(foundFloralStyle => {
-            res.render('floralsShow', {
-                floralStyle: foundFloralStyle
-            })
-        })
-})
+// Index
+floralStyle.get('/', (req: Request, res: Response) => {
+  FloralStyle.find()
+    .populate('floralStyle')
+    .then((foundFlorals: Array<any>) => {
+      res.send(foundFlorals);
+    })
+    .catch((err: Error) => res.status(500).send(err.message));
+});
 
-// delete
-floralStyle.delete('/:id', (req, res) => {
-    FloralStyle.findByIdAndDelete(req.params.id) 
-      .then(deletedFloralStyle => { 
-        res.status(303).redirect('/florals')
-      })
-})
+// Show
+floralStyle.get('/:id', (req: Request, res: Response) => {
+  FloralStyle.findById(req.params.id)
+    .populate('florals')
+    .then((foundFloralStyle: any) => {
+      res.render('floralsShow', {
+        floralStyle: foundFloralStyle,
+      });
+    })
+    .catch((err: Error) => res.status(500).send(err.message));
+});
 
+// Delete
+floralStyle.delete('/:id', (req: Request, res: Response) => {
+  FloralStyle.findByIdAndDelete(req.params.id)
+    .then((deletedFloralStyle: any) => {
+      res.status(303).redirect('/florals');
+    })
+    .catch((err: Error) => res.status(500).send(err.message));
+});
 
-
-
-
-// export
-module.exports = floralStyle
+export default floralStyle;

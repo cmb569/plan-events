@@ -2,11 +2,13 @@ import React, { StrictMode } from 'react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
+import App from './App';
+import ReactDOM from 'react-dom';
 
 
 const root = document.getElementById('root');
-ReactDom.render(
-  <React,StrictMode>
+ReactDOM.render(
+  <React.StrictMode>
     <App/>
   </React.StrictMode>,
   document.getElementById('root')
