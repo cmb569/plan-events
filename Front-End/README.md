@@ -1,4 +1,4 @@
-Sparkly Event Planner
+<h1>Sparkly Event Planner</h1>
 
 
 Our application will demonstrate how you can plan for special events while keeping everything organized, especially if you have clients that are specific on their requests.
